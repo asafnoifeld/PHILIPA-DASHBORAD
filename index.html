@@ -1070,19 +1070,20 @@ let NL50o = {};
 let IL60o = {};
 let NL60o = {};
 
-fetch('data.json')
-  .then(response => response.json())
-  .then(data => {
+async function loadData() {
+  const response = await fetch('data.json?ts=' + Date.now());
+  const data = await response.json();
 
-    O50 = data.O50 || {};
-    O60 = data.O60 || {};
-    S50 = data.S50 || {};
-    S60 = data.S60 || {};
-    IL50o = data.IL50o || {};
-    SG50o = data.SG50o || {};
-    NL50o = data.NL50o || {};
-    IL60o = data.IL60o || {};
-    NL60o = data.NL60o || {};
+  O50 = data.O50 || {};
+  O60 = data.O60 || {};
+  S50 = data.S50 || {};
+  S60 = data.S60 || {};
+  IL50o = data.IL50o || {};
+  SG50o = data.SG50o || {};
+  NL50o = data.NL50o || {};
+  IL60o = data.IL60o || {};
+  NL60o = data.NL60o || {};
+}
 
    
   });
@@ -1127,7 +1128,7 @@ function mkGap(id, D, S) {
     }
   });
 }
-
+loadData().then(() => {
 mkBar('c50ov', ML, [{label:'ביקוש',data:a(O50),backgroundColor:'rgba(176,24,54,0.8)',borderRadius:7},{label:'אטלס',data:a(S50),backgroundColor:'rgba(22,101,52,0.75)',borderRadius:7}]);
 mkBar('c60ov', ML, [{label:'ביקוש',data:a(O60),backgroundColor:'rgba(55,65,81,0.8)',borderRadius:7},{label:'אטלס',data:a(S60),backgroundColor:'rgba(22,101,52,0.75)',borderRadius:7}]);
 mkBar('c50det', ML, [{label:'ביקוש',data:a(O50),backgroundColor:'rgba(176,24,54,0.8)',borderRadius:7},{label:'אטלס',data:a(S50),backgroundColor:'rgba(22,101,52,0.75)',borderRadius:7}]);
@@ -1139,7 +1140,7 @@ mkBar('cSG50', ML, [{data:a(SG50o),backgroundColor:'rgba(159,18,57,0.8)',borderR
 mkBar('cNL50', ML, [{data:a(NL50o),backgroundColor:'rgba(22,101,52,0.8)',borderRadius:7}]);
 mkBar('cIL60', ML, [{data:a(IL60o),backgroundColor:'rgba(30,64,175,0.8)',borderRadius:7}]);
 mkBar('cNL60', ML, [{data:a(NL60o),backgroundColor:'rgba(22,101,52,0.8)',borderRadius:7}]);
-
+});
 // ─── Gap Table ───
 const gapRows = [
   ['2026-03','60HZ',14,0],['2026-04','50HZ',5,0],['2026-05','50HZ',0,9],
